@@ -66,5 +66,14 @@ public class paddleMovement : MonoBehaviour
         }
 
         transform.Translate(speed * Time.deltaTime);
+        
+        while(transform.position.z > 11){
+            transform.Translate(new Vector3(0f, 0f, -.1f));
+        }
+
+        while (transform.position.z < -11)
+        {
+            transform.Translate(new Vector3(0f, 0f, .1f));
+        }
     }
 }
