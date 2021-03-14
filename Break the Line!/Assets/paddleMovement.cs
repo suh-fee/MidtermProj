@@ -6,16 +6,18 @@ public class paddleMovement : MonoBehaviour
 {
     bool up = false;
     bool down = false;
-    public Vector3 acc = new Vector3(0f,0f,5f);
+    public Vector3 acc = new Vector3(0f,0f,2f);
     Vector3 negativeAcc;
     public Vector3 speed;
-    public float max = 5f;
+    public float max = 20f;
+    Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         negativeAcc = -1 * acc;
         speed = new Vector3(0f, 0f, 0f);
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -46,6 +48,7 @@ public class paddleMovement : MonoBehaviour
 
     void Movement()
     {
+        rb.velocity = new Vector3(0f, 0f, 0f); //ensures the ball won't cause movement in the paddle
         Debug.Log(speed);
         if (up)
         {
@@ -68,12 +71,12 @@ public class paddleMovement : MonoBehaviour
         transform.Translate(speed * Time.deltaTime);
         
         while(transform.position.z > 11){
-            transform.Translate(new Vector3(0f, 0f, -.1f));
+            transform.Translate(new Vector3(0f, 0f, -.1f) * Time.deltaTime);
         }
 
         while (transform.position.z < -11)
         {
-            transform.Translate(new Vector3(0f, 0f, .1f));
+            transform.Translate(new Vector3(0f, 0f, .1f) * Time.deltaTime);
         }
     }
 }

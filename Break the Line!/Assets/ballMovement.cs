@@ -33,6 +33,7 @@ public class ballMovement : MonoBehaviour
         } else
         {
             lastFrameVelocity = rb.velocity;
+            
         }
 
 
@@ -40,7 +41,14 @@ public class ballMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Bounce(collision.contacts[0].normal);
+        if(collision.gameObject.tag == "Death")
+        {
+            Death();
+        } else
+        {
+            Bounce(collision.contacts[0].normal);
+        }
+        
     }
 
     private void Bounce(Vector3 collisionNormal)
@@ -50,6 +58,12 @@ public class ballMovement : MonoBehaviour
 
         Debug.Log("Out Direction: " + direction);
         rb.velocity = direction * Mathf.Max(speed, minVelocity);
+    }
+
+    private void Death()
+    {
+        start = false;
+        rb.velocity = new Vector3(0f, 0f, 0f);
     }
 
 }
