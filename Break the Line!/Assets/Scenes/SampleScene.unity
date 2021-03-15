@@ -375,6 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paddle: {fileID: 1232526260}
   rb: {fileID: 0}
+  scoreManager: {fileID: 1405870830}
 --- !u!54 &425935581
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -784,9 +785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1014bdc163222f845a2235c0af5204b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acc: {x: 0, y: 0, z: 3}
-  speed: {x: 0, y: 0, z: 0}
-  max: 20
 --- !u!54 &1232526266
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -814,6 +812,7 @@ GameObject:
   - component: {fileID: 1405870831}
   - component: {fileID: 1405870832}
   - component: {fileID: 1405870833}
+  - component: {fileID: 1405870834}
   m_Layer: 0
   m_Name: scoreManager
   m_TagString: GameController
@@ -847,7 +846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075b6f598a824ed41acf07780fe77bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
 --- !u!114 &1405870833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,7 +862,19 @@ MonoBehaviour:
   sinMed: {fileID: 5870378805642031911, guid: d1a0afd84cdcd2649a47c0ae63a485ce, type: 3}
   linEasy: {fileID: 70953787306210056, guid: e433b4bbe0b845b44a683b1ed8334fcf, type: 3}
   sinEasy: {fileID: 6017876307813906838, guid: 4a595842c2b67f042921fa7ffa9478a2, type: 3}
-  start: 1
+  start: 0
+--- !u!114 &1405870834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405870830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59142c831ab6e144e863e8a7ee4f33be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1428856231
 GameObject:
   m_ObjectHideFlags: 0
