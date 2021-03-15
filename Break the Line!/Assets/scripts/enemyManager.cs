@@ -41,6 +41,12 @@ public class enemyManager : MonoBehaviour
                 timer = 0;
                 spawnEnemies();
             }
+        } else
+        {
+            if (Input.GetKeyDown("space"))
+            {
+                start = true;
+            }
         }
         
 
@@ -70,5 +76,16 @@ public class enemyManager : MonoBehaviour
         }
 
         Instantiate(next, new Vector3(20f, 0.25f, 0f), transform.rotation);
+    }
+
+    public void clearEnemies()
+    {
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for(int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i]);
+        }
+
+        start = false;
     }
 }
