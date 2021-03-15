@@ -49,7 +49,6 @@ public class paddleMovement : MonoBehaviour
     void Movement()
     {
         rb.velocity = new Vector3(0f, 0f, 0f); //ensures the ball won't cause movement in the paddle
-        Debug.Log(speed);
         if (up)
         {
             speed += acc;

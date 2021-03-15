@@ -5,8 +5,8 @@ using UnityEngine;
 public class enemyBehavior : MonoBehaviour
 {
     public Vector3 tarPos;
-    public int maxHealth = 3;
-    public int currHealth = 3;
+    public int maxHealth;
+    public int currHealth;
     public Color color;
     private Renderer rn;
     public int movementType;
@@ -17,6 +17,8 @@ public class enemyBehavior : MonoBehaviour
     // used for sin movement
     int timeScale = 4;
     float amplitude = 5;
+
+    GameObject[] obj;
 
 
 
@@ -29,12 +31,24 @@ public class enemyBehavior : MonoBehaviour
         linearMovement = new Vector3(-.5f, 0f, 0f);
     }
 
+    void Awake()
+    {
+        obj = GameObject.FindGameObjectsWithTag("GameController");
+        scoreManager = obj[0];
+
+
+        rn = GetComponent<Renderer>();
+        sm = scoreManager.GetComponent<scoreManager>();
+        linearMovement = new Vector3(-.5f, 0f, 0f);
+    }
+
     // Update is called once per frame
     void Update()
     {
 
         updateColor();
         updatePos();
+        checkPos();
 
         if (currHealth <= 0)
         {
@@ -44,7 +58,7 @@ public class enemyBehavior : MonoBehaviour
 
     private void death()
     {
-        sm.incScore(maxHealth);
+        sm.incScore(maxHealth * 5);
         Destroy(gameObject);
     }
 
@@ -56,11 +70,20 @@ public class enemyBehavior : MonoBehaviour
                 transform.Translate(linearMovement * Time.deltaTime);
                 break;
             case 2: //sin movement towards goal along z axis
-                transform.Translate(new Vector3(-.5f, 0f, Mathf.Sin(Time.time * timeScale)) * Time.deltaTime * amplitude);
+                transform.Translate(new Vector3(-.5f * Time.deltaTime, 0f, Mathf.Sin(Time.time * timeScale) * amplitude* Time.deltaTime));
                 break;
             default:
                 Debug.Log("Enemy Case broken.");
                 break;
+        }
+    }
+
+    private void checkPos()
+    {
+        if(transform.position.x <= -20)
+        {
+            sm.decHP();
+            Destroy(gameObject);
         }
     }
 

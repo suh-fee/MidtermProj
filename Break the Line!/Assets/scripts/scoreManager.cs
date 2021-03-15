@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class scoreManager : MonoBehaviour
 {
-    float score;
+    public float score;
     GUIStyle style = new GUIStyle();
+
+    int health = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +27,14 @@ public class scoreManager : MonoBehaviour
         score += value;
     }
 
+    public void decHP()
+    {
+        health -= 1;
+    }
+
     public void OnGUI()
     {
         GUI.backgroundColor = Color.yellow;
-        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), score.ToString("#."), style);
+        GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "Score: " + score.ToString("#.") + "   Health: " + health.ToString(), style);
     }
 }
