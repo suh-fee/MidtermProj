@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Paddle
   - Ball
+  - Death
+  - Enemy
   layers:
   - Default
   - TransparentFX

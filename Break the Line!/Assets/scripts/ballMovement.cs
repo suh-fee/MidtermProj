@@ -9,7 +9,7 @@ public class ballMovement : MonoBehaviour
     bool start = false;
     public Rigidbody rb;
     private Vector3 lastFrameVelocity;
-    private float minVelocity = 10f;
+    private float minVelocity = 20f;
 
 
     // Start is called before the first frame update
