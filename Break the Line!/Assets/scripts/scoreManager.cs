@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class scoreManager : MonoBehaviour
 {
-    public float score;
-    GUIStyle style = new GUIStyle();
-
-    List<float> scores = new List<float>();
-    string scoreString = "Scores: ";
+    float score; //overall score of the current round
     int health = 5;
+    
+    GUIStyle style = new GUIStyle(); 
+
+    List<float> scores = new List<float>(); //needed for sorting all scores and keeping track between rounds
+    string scoreString = "Scores: ";
+
+    //housekeeping variables
     enemyManager em;
-    bool start = false;
+    bool start = false; //used to allow breaks, similar to enemy manager
 
     // Start is called before the first frame update
     void Start()
     {
         score = 0;
-        style.fontSize= 25;
+        style.fontSize = 25;
         em = GetComponent<enemyManager>();
     }
 
@@ -26,7 +29,7 @@ public class scoreManager : MonoBehaviour
     {
         if (start)
         {
-            incScore(1 * Time.deltaTime);
+            incScore(1 * Time.deltaTime); //passive point generation during a round, pause if not
         } else
         {
             if (Input.GetKeyDown("space"))
@@ -41,23 +44,21 @@ public class scoreManager : MonoBehaviour
         start = true;
     }
 
-    public void incScore(float value)
+    public void incScore(float value) //public, called in enemyBehavior > Death()
     {
-
         score += value;
     }
 
-    public void decHP()
+    public void decHP() //called in enemyBehavior and ballMovement
     {
         health -= 1;
-
         if(health <= 0)
         {
             reset();
         }
     }
 
-    public void OnGUI()
+    private void OnGUI()
     {
         GUI.backgroundColor = Color.yellow;
         GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "Score: " + score.ToString("#.") + "   Health: " + health.ToString(), style);
@@ -65,15 +66,19 @@ public class scoreManager : MonoBehaviour
         GUI.Label(new Rect(Screen.width - 200, 0, Screen.width, Screen.height), scoreString, style);
     }
 
-    public void reset()
+    //reset the game state between round losses
+    //also keeps track of all scores + sorts them!
+    private void reset()
     {
+
         start = false;
         em.clearEnemies();
         scores.Add(score);
-        scoreString = "Scores: \n";
         quickSort(ref scores, 0, scores.Count - 1);
 
-        for(int i = 0; i < scores.Count; i++)
+        //updates the GUI to reflect latest scores
+        scoreString = "Scores: \n";
+        for (int i = 0; i < scores.Count; i++)
         {
             scoreString += "#" + (scores.Count-i).ToString() + ": " + scores[i].ToString("#.") + "\n";
         }
@@ -82,6 +87,7 @@ public class scoreManager : MonoBehaviour
         score = 0;
     }
 
+    // same implementation from my expressive algorithm
     void quickSort(ref List<float> list, int low, int high)
     {
         if (low < high)
@@ -112,8 +118,6 @@ public class scoreManager : MonoBehaviour
             }
 
         }
-
-        // is tuple swapping a thing in C#?
         temp = list[smallerIndex + 1];
         list[smallerIndex + 1] = list[high];
         list[high] = temp;

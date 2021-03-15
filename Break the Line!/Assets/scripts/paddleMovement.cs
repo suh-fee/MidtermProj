@@ -6,10 +6,10 @@ public class paddleMovement : MonoBehaviour
 {
     bool up = false;
     bool down = false;
-    public Vector3 acc = new Vector3(0f,0f,2f);
+    Vector3 acc = new Vector3(0f,0f,2f);
     Vector3 negativeAcc;
-    public Vector3 speed;
-    public float max = 20f;
+    Vector3 speed;
+    float max = 20f; //maximum speed of paddle
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -26,8 +26,6 @@ public class paddleMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             up = true;
-            
-            
         } else
         {
             up = false;
@@ -42,13 +40,14 @@ public class paddleMovement : MonoBehaviour
         {
             down = false;
         }
-
         Movement();
     }
 
     void Movement()
     {
         rb.velocity = new Vector3(0f, 0f, 0f); //ensures the ball won't cause movement in the paddle
+
+        //again, has to be a neater way to do this
         if (up)
         {
             speed += acc;
@@ -69,6 +68,7 @@ public class paddleMovement : MonoBehaviour
 
         transform.Translate(speed * Time.deltaTime);
         
+        //standard collisions broke the paddle, so i hardcoded the z-axis boundaries
         while(transform.position.z > 11){
             transform.Translate(new Vector3(0f, 0f, -.1f) * Time.deltaTime);
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class enemyManager : MonoBehaviour
 {
+    //could've made these public, wanted to try out serialized variables
     [SerializeField]
     GameObject linMed;
     [SerializeField]
@@ -15,16 +16,14 @@ public class enemyManager : MonoBehaviour
 
     GameObject[] enemies;
 
-    public bool start;
+    public bool start; //allows for a 'break' state between rounds
     float timer = 0;
     float maxTime = 10;
-
-    scoreManager sm;
 
     // Start is called before the first frame update
     void Start()
     {
-        sm = GetComponent<scoreManager>();
+       
     }
 
     // Update is called once per frame
@@ -36,7 +35,7 @@ public class enemyManager : MonoBehaviour
 
             timer += 1 * Time.deltaTime;
 
-            if ((enemies.Length == 0) | (timer > maxTime))
+            if ((enemies.Length == 0) | (timer > maxTime)) //spawns new enemies on the timer or if there are none on screen
             {
                 timer = 0;
                 spawnEnemies();
@@ -55,24 +54,26 @@ public class enemyManager : MonoBehaviour
     void spawnEnemies()
     {
         GameObject next;
+
+        //is there a better way to do random generation? i'm just using a range and random to simulate percentage chance
         float rand = Random.Range(0f, 100f);
-        if(rand <= 15)
+        if(rand <= 15) //least likely (15%)
         {
             next = sinMed;
-        } else if(rand <= 35)
+        } else if(rand <= 35) //(20%)
         {
             next = linMed;
-        } else if(rand <= 60)
+        } else if(rand <= 60) //(25%)
         {
             next = sinEasy;
-        } else
+        } else //most likely (40%)
         {
             next = linEasy;
         }
 
-        if(maxTime >= 5)
+        if(maxTime >= 5) // slowly makes gameplay more stressful. is there even a tangible effect from this???
         {
-            maxTime -= .5f;
+            maxTime -= .25f;
         }
 
         Instantiate(next, new Vector3(20f, 0.25f, 0f), transform.rotation);
@@ -80,6 +81,8 @@ public class enemyManager : MonoBehaviour
 
     public void clearEnemies()
     {
+
+        //used during round loss
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for(int i = 0; i < enemies.Length; i++)
         {

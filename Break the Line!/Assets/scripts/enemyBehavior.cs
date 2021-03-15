@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class enemyBehavior : MonoBehaviour
 {
-    public Vector3 tarPos;
-    public int maxHealth;
+    //different enemy types have different HP values
+    public int maxHealth; //also changes how score is incremented
     public int currHealth;
-    public Color color;
+
+    //involved in changing enemy color depending on hp
+    Color color;
     private Renderer rn;
+
+    //used for case switching between linear and sin movement
     public int movementType;
-    public Vector3 linearMovement;
-    public GameObject scoreManager;
-    public scoreManager sm;
+    Vector3 linearMovement;
 
     // used for sin movement
     int timeScale = 4;
     float amplitude = 5;
 
-    GameObject[] obj;
+    //management variables
+    public GameObject scoreManager;
+    scoreManager sm;
+    GameObject[] obj; 
 
 
 
 
-    // Start is called before the first frame update
+    // start is never called, but kept here for debugging purposes
     void Start()
     {
         rn = GetComponent<Renderer>();
@@ -31,11 +36,12 @@ public class enemyBehavior : MonoBehaviour
         linearMovement = new Vector3(-.5f, 0f, 0f);
     }
 
+    //called whenever an enemy is instantiated
     void Awake()
     {
+        //initialize all needed variables for a given enemy
         obj = GameObject.FindGameObjectsWithTag("GameController");
         scoreManager = obj[0];
-
 
         rn = GetComponent<Renderer>();
         sm = scoreManager.GetComponent<scoreManager>();
@@ -46,6 +52,7 @@ public class enemyBehavior : MonoBehaviour
     void Update()
     {
 
+        //cleaned up, added to functions
         updateColor();
         updatePos();
         checkPos();
@@ -69,7 +76,7 @@ public class enemyBehavior : MonoBehaviour
             case 1: //linear movement towards goal
                 transform.Translate(linearMovement * Time.deltaTime);
                 break;
-            case 2: //sin movement towards goal along z axis
+            case 2: //sin movement along the z axis, linear movement towards enemy goal
                 transform.Translate(new Vector3(-.5f * Time.deltaTime, 0f, Mathf.Sin(Time.time * timeScale) * amplitude* Time.deltaTime));
                 break;
             default:
@@ -78,6 +85,7 @@ public class enemyBehavior : MonoBehaviour
         }
     }
 
+    //when an enemy hits the paddle line, dec the HP as needed
     private void checkPos()
     {
         if(transform.position.x <= -20)
@@ -90,6 +98,7 @@ public class enemyBehavior : MonoBehaviour
 
     private void updateColor()
     {
+        //there HAS to be a neater way to do this...
         if (currHealth == 4)
         {
             color = Color.blue;
@@ -112,7 +121,7 @@ public class enemyBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ball")
+        if (collision.gameObject.tag == "Ball") //ensures paddle/wall don't decrement HP
         {
             currHealth -= 1;
         }

@@ -138,14 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945b9860dcb8051458fef844af5bdbc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tarPos: {x: 0, y: 0, z: 0}
-  maxHealth: 3
-  currHealth: 3
-  color: {r: 0, g: 0, b: 0, a: 0}
+  maxHealth: 2
+  currHealth: 2
   movementType: 1
-  linearMovement: {x: 0, y: 0, z: 0}
   scoreManager: {fileID: 0}
-  sm: {fileID: 0}
 --- !u!1 &4844546892317787037
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,11 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945b9860dcb8051458fef844af5bdbc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tarPos: {x: 0, y: 0, z: 0}
-  maxHealth: 3
-  currHealth: 3
-  color: {r: 0, g: 0, b: 0, a: 0}
+  maxHealth: 2
+  currHealth: 2
   movementType: 1
-  linearMovement: {x: 0, y: 0, z: 0}
   scoreManager: {fileID: 0}
-  sm: {fileID: 0}
